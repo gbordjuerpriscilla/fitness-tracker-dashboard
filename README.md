@@ -1,4 +1,4 @@
-# fitness-tracker-dashboard
+
 # Fitness Tracker Insights Dashboard
 
 An interactive dashboard analysing daily steps, sleep and calories for 120 users over 4 weeks.
