@@ -1,21 +1,24 @@
-
 # Fitness Tracker Insights Dashboard
 
-An interactive dashboard analysing daily steps, sleep and calories for 120 users over 4 weeks.
+This is a dashboard in which contains a sample of 120 users in 28 days.
 
-Live dashboard: https://gbordjuerpriscilla.github.io/fitness-tracker-dashboard/
+**Live dashboard:** https://gbordjuerpriscilla.github.io/fitness-tracker-dashboard/
 
-## Top insight
-Average daily steps fell only 1.7% from week 1 to week 4, so the overall trend looks stable. But 8 users (6.7%) dropped to about 30% of their normal steps for 5 days in a row. The average can hide users who are slipping, so the team should follow up with them early.
+## What I found
+In those 28 days, average daily steps fell by 1.7%, but the trend is stable. 8 of the users which is 6.7% dropped to approximately 30% of their normal steps for 5 days in a row.
 
-## What the dashboard shows
-1. Weekly trend charts for steps, sleep and calories
-2. "Most Active Users" leaderboard (top 10 by average daily steps)
-3. Flag for users whose steps stayed below 50% of their own normal for 3+ days in a row
+## What's in the dashboard
+- Weekly trend charts for steps, sleep and calories
+- Top 10 most active users
+- A flag for users whose steps stayed below 50% of their own normal for 3+ days in a row
 
-## How it was built
-Python (pandas, NumPy, matplotlib): It was made in Google Colab which generated the dataset, computed weekly averages, built the leaderboard and the flag logic.
-**HTML, CSS and Chart.js** for the dashboard page.It was hosted on GitHub Pages
+## How I built it
+- Python (pandas) in Google Colab for the data and the flag logic. The notebook is in this repo.
+- HTML, CSS and Chart.js for the dashboard, hosted on GitHub Pages.
 
-## Note on the data
-The dataset is simulated sample data (120 users, 28 days, 8 users given a drop-off on purpose so the flag has something to catch). It is not real user data.
+## What was hard
+Cleaning the data set and producing the charts was a bit hard for me.
+Also creating the dashboard was a bit confusing and difficult.
+
+## Note
+The data is simulated (120 users, 28 days). It is not real user data.
