@@ -7,14 +7,14 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <style>
     body { margin: 0; font-family: Arial, sans-serif; background: #f4f6fb; color: #1f2937; }
-    header { background: linear-gradient(135deg, #4f46e5, #06b6d4); color: white; padding: 32px 24px; text-align: center; }
+    header { background: linear-gradient(135deg, #7c3aed, #10b981); color: white; padding: 32px 24px; text-align: center; }
     header h1 { margin: 0 0 8px; }
     main { max-width: 1000px; margin: 24px auto; padding: 0 16px; }
     .card { background: white; border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
     .insight { border-left: 6px solid #f59e0b; }
         table { width: 100%; border-collapse: collapse; }
     th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #e5e7eb; }
-    th { background: #4f46e5; color: white; }
+    th { background: #7c3aed; color: white; }
     tr:nth-child(even) td { background: #f9fafb; }
         .badge { background: #fee2e2; color: #b91c1c; padding: 4px 10px; border-radius: 999px; font-size: 0.85em; font-weight: bold; }
   </style>
@@ -181,7 +181,7 @@
         datasets: [{
           label: "Avg daily steps",
           data: data.weekly.map(w => w.steps),
-          borderColor: "#4f46e5",
+          borderColor: "#7c3aed",
           backgroundColor: "rgba(79,70,229,0.15)",
           fill: true,
           tension: 0.3
