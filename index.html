@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fitness Tracker Insights Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    body { margin: 0; font-family: Arial, sans-serif; background: #f4f6fb; color: #1f2937; }
+    header { background: linear-gradient(135deg, #4f46e5, #06b6d4); color: white; padding: 32px 24px; text-align: center; }
+    header h1 { margin: 0 0 8px; }
+    main { max-width: 1000px; margin: 24px auto; padding: 0 16px; }
+    .card { background: white; border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .insight { border-left: 6px solid #f59e0b; }
+        table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #e5e7eb; }
+    th { background: #4f46e5; color: white; }
+    tr:nth-child(even) td { background: #f9fafb; }
+        .badge { background: #fee2e2; color: #b91c1c; padding: 4px 10px; border-radius: 999px; font-size: 0.85em; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Fitness Tracker Insights Dashboard</h1>
+    <p>Simulated sample data: 120 users, 28 days</p>
+  </header>
+
+  <main>
+          <section class="card insight">
+      <h2>Top insight</h2>
+      <p>Average daily steps fell only 1.7% from week 1 to week 4, so the overall trend looks stable. But 8 users (6.7%) dropped to about 30% of their normal steps for 5 days in a row. The average can hide users who are slipping, so the team should follow up with them early.</p>
+    </section>
+        <section class="card">
+      <h2>Weekly trends</h2>
+      <h3>Average daily steps</h3>
+      <canvas id="stepsChart" height="100"></canvas>
+      <h3>Average sleep hours</h3>
+      <canvas id="sleepChart" height="100"></canvas>
+            <h3>Average calories</h3>
+      <canvas id="caloriesChart" height="100"></canvas>
+    </section>
+        <section class="card">
+      <h2>Most Active Users (Top 10)</h2>
+      <table>
+        <thead>
+          <tr><th>Rank</th><th>User</th><th>Avg daily steps</th></tr>
+        </thead>
+        <tbody id="leaderboardBody"></tbody>
+      </table>
+    </section>
+    <section class="card">
+      <h2>Users flagged for dropped activity</h2>
+      <p>Steps stayed below 50% of the user's own normal for 3+ days in a row.</p>
+      <table>
+        <thead>
+          <tr><th>User</th><th>Days in a row</th><th>Status</th></tr>
+        </thead>
+        <tbody id="flaggedBody"></tbody>
+      </table>
+    </section>
+  </main>
+    <script>
+    const data = {
+  "weekly": [
+    {
+      "week": 1,
+      "steps": 8117.1,
+      "sleep_hours": 6.9,
+      "calories": 2264.9
+    },
+    {
+      "week": 2,
+      "steps": 8126.0,
+      "sleep_hours": 6.9,
+      "calories": 2275.2
+    },
+    {
+      "week": 3,
+      "steps": 8102.8,
+      "sleep_hours": 6.9,
+      "calories": 2267.3
+    },
+    {
+      "week": 4,
+      "steps": 7982.0,
+      "sleep_hours": 7.0,
+      "calories": 2267.2
+    }
+  ],
+  "leaderboard": [
+    {
+      "user_id": "user_016",
+      "avg_daily_steps": 11881.0
+    },
+    {
+      "user_id": "user_009",
+      "avg_daily_steps": 11852.0
+    },
+    {
+      "user_id": "user_097",
+      "avg_daily_steps": 11814.0
+    },
+    {
+      "user_id": "user_111",
+      "avg_daily_steps": 11730.0
+    },
+    {
+      "user_id": "user_031",
+      "avg_daily_steps": 11710.0
+    },
+    {
+      "user_id": "user_006",
+      "avg_daily_steps": 11664.0
+    },
+    {
+      "user_id": "user_019",
+      "avg_daily_steps": 11479.0
+    },
+    {
+      "user_id": "user_058",
+      "avg_daily_steps": 11334.0
+    },
+    {
+      "user_id": "user_048",
+      "avg_daily_steps": 11110.0
+    },
+    {
+      "user_id": "user_089",
+      "avg_daily_steps": 11035.0
+    }
+  ],
+  "flagged": [
+    {
+      "user_id": "user_005",
+      "streak_days": 5
+    },
+    {
+      "user_id": "user_011",
+      "streak_days": 5
+    },
+    {
+      "user_id": "user_012",
+      "streak_days": 5
+    },
+    {
+      "user_id": "user_017",
+      "streak_days": 5
+    },
+    {
+      "user_id": "user_059",
+      "streak_days": 5
+    },
+    {
+      "user_id": "user_078",
+      "streak_days": 5
+    },
+    {
+      "user_id": "user_082",
+      "streak_days": 5
+    },
+    {
+      "user_id": "user_087",
+      "streak_days": 5
+    }
+  ],
+  "summary": {
+    "users": 120,
+    "days": 28,
+    "week1_steps": 8117.1,
+    "week4_steps": 7982.0,
+    "change_pct": -1.7
+  }
+}
+
+    const weeks = data.weekly.map(w => "Week " + w.week);
+
+    new Chart(document.getElementById("stepsChart"), {
+      type: "line",
+      data: {
+        labels: weeks,
+        datasets: [{
+          label: "Avg daily steps",
+          data: data.weekly.map(w => w.steps),
+          borderColor: "#4f46e5",
+          backgroundColor: "rgba(79,70,229,0.15)",
+          fill: true,
+          tension: 0.3
+        }]
+      },
+      options: {
+        scales: { y: { min: 0, max: 12000 } }
+      }
+    });
+        new Chart(document.getElementById("sleepChart"), {
+      type: "line",
+      data: {
+        labels: weeks,
+        datasets: [{
+          label: "Avg sleep hours",
+          data: data.weekly.map(w => w.sleep_hours),
+          borderColor: "#10b981",
+          backgroundColor: "rgba(16,185,129,0.15)",
+          fill: true,
+          tension: 0.3
+        }]
+      },
+      options: {
+        scales: { y: { min: 0, max: 10 } }
+      }
+    });
+        new Chart(document.getElementById("caloriesChart"), {
+      type: "line",
+      data: {
+        labels: weeks,
+        datasets: [{
+          label: "Avg calories",
+          data: data.weekly.map(w => w.calories),
+          borderColor: "#f59e0b",
+          backgroundColor: "rgba(245,158,11,0.15)",
+          fill: true,
+          tension: 0.3
+        }]
+      },
+      options: {
+        scales: { y: { min: 0, max: 3000 } }
+      }
+    });
+        const lbBody = document.getElementById("leaderboardBody");
+    data.leaderboard.forEach((u, i) => {
+      lbBody.innerHTML += `<tr>
+        <td>${i + 1}</td>
+        <td>${u.user_id}</td>
+        <td>${Number(u.avg_daily_steps).toLocaleString()}</td>
+      </tr>`;
+    });
+        const flBody = document.getElementById("flaggedBody");
+    data.flagged.forEach(u => {
+      flBody.innerHTML += `<tr>
+        <td>${u.user_id}</td>
+        <td>${u.streak_days}</td>
+        <td><span class="badge">Follow up</span></td>
+      </tr>`;
+    });
+  </script>
+</body>
+</html>
