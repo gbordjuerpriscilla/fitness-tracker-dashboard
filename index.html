@@ -11,7 +11,7 @@
     header h1 { margin: 0 0 8px; }
     main { max-width: 1000px; margin: 24px auto; padding: 0 16px; }
     .card { background: white; border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-    .insight { border-left: 6px solid #f59e0b; }
+    .insight { border-left: 6px solid #dc2626; }
         table { width: 100%; border-collapse: collapse; }
     th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #e5e7eb; }
     th { background: #7c3aed; color: white; }
@@ -182,7 +182,7 @@
           label: "Avg daily steps",
           data: data.weekly.map(w => w.steps),
           borderColor: "#7c3aed",
-          backgroundColor: "rgba(79,70,229,0.15)",
+          backgroundColor: "rgba(124,58,237,0.15)",
           fill: true,
           tension: 0.3
         }]
@@ -215,8 +215,8 @@
         datasets: [{
           label: "Avg calories",
           data: data.weekly.map(w => w.calories),
-          borderColor: "#f59e0b",
-          backgroundColor: "rgba(245,158,11,0.15)",
+          borderColor: "#dc2626",
+          backgroundColor: "rgba(220,38,38,0.15)",
           fill: true,
           tension: 0.3
         }]
